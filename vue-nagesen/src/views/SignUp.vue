@@ -1,7 +1,7 @@
 <template>
   <div class="signup">
-    <Title msg="ユーザー登録"/>
-    <form >
+    <Title msg="新規登録画面"/>
+    <form>
       <div>
         <label for="name">ユーザー名</label>
         <input type="text" id="name" v-model="user.name" placeholder="userName">
@@ -16,6 +16,7 @@
       </div>
       <button type="button" class="button is-primary" @click="registerUser">送信する</button>
     </form>
+    <p><router-link to="/signin">ログインはこちら</router-link></p>
   </div>
 </template>
 
