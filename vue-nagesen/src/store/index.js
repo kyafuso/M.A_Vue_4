@@ -8,8 +8,12 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     user : {
-      name : ''
+      name : '',
+      account : ''
     }
+  },
+  getters: {
+    user: state => state.user
   },
   mutations: {
     registerUser(state, user){
@@ -17,6 +21,7 @@ export default new Vuex.Store({
       .then((userCredential) => {
         console.log(userCredential.user);
         state.user.name = user.name;
+        state.user.account = 1000;
       })
       .catch((error) => {
         console.log(error.code);

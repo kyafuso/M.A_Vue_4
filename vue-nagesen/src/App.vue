@@ -1,8 +1,11 @@
 <template>
   <div id="app">
-    <div id="nav">
+    <div class="container">
+      <img alt="Vue logo" src="./assets/logo.png">
+      <div id="nav">
+      </div>
+      <router-view/>
     </div>
-    <router-view/>
   </div>
 </template>
 
