@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <div class="header">
-      <p class="username">{{ user.name }}ようこそさん！</p>
+      <p class="username">{{ user.name }}さんようこそ！！</p>
       <p class="account">残高：{{ user.account }}円</p>
     </div>
     <Title msg="ユーザー一覧"/>

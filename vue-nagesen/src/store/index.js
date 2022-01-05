@@ -9,7 +9,8 @@ export default new Vuex.Store({
   state: {
     user : {
       name : '',
-      account : ''
+      account : '',
+      isLogin : false
     }
   },
   getters: {
@@ -17,34 +18,35 @@ export default new Vuex.Store({
   },
   mutations: {
     registerUser(state, user){
-      firebase.auth().createUserWithEmailAndPassword(user.email, user.password)
-      .then((userCredential) => {
-        console.log(userCredential.user);
-        state.user.name = user.name;
-        state.user.account = 1000;
-      })
-      .catch((error) => {
-        console.log(error.code);
-        console.log(error.message);
-      });
+      state.user.name = user.name;
+      state.user.account = 1000;
     },
-    loginUser(state, user){
-      firebase.auth().signInWithEmailAndPassword(user.email, user.password)
-      .then((userCredential) => {
-        console.log(userCredential.user);
-      })
-      .catch((error) => {
-        console.log(error.code);
-        console.log(error.message);
-      });
+    loginUser(state){
+      state.user.isLogin = true;
     }
   },
   actions: {
     registerUser( {commit}, user){
-      commit('registerUser', user);
+      firebase.auth().createUserWithEmailAndPassword(user.email, user.password)
+      .then((userCredential) => {
+        console.log(userCredential.user);
+        commit('registerUser', user);
+      })
+      .catch((error) => {
+        console.log(error.code);
+        console.log(error.message);
+      });
     },
     loginUser( {commit}, user){
-      commit('loginUser', user);
+      firebase.auth().signInWithEmailAndPassword(user.email, user.password)
+      .then((userCredential) => {
+        console.log(userCredential.user);
+        commit('loginUser');
+      })
+      .catch((error) => {
+        console.log(error.code);
+        console.log(error.message);
+      });
     }
   },
   modules: {
