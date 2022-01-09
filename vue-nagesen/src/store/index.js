@@ -17,11 +17,11 @@ export default new Vuex.Store({
     user: state => state.user
   },
   mutations: {
-    registerUser(state, user){
+    setUser(state, user){
       state.user.name = user.name;
       state.user.account = 1000;
     },
-    loginUser(state){
+    setLogin(state){
       state.user.isLogin = true;
     }
   },
@@ -30,7 +30,7 @@ export default new Vuex.Store({
       firebase.auth().createUserWithEmailAndPassword(user.email, user.password)
       .then((userCredential) => {
         console.log(userCredential.user);
-        commit('registerUser', user);
+        commit('setUser', user);
       })
       .catch((error) => {
         console.log(error.code);
@@ -41,7 +41,7 @@ export default new Vuex.Store({
       firebase.auth().signInWithEmailAndPassword(user.email, user.password)
       .then((userCredential) => {
         console.log(userCredential.user);
-        commit('loginUser');
+        commit('setLogin');
       })
       .catch((error) => {
         console.log(error.code);
