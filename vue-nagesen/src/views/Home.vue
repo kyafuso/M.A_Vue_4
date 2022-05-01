@@ -3,6 +3,9 @@
     <div class="header">
       <p class="username">{{ user.name }}さんようこそ！！</p>
       <p class="account">残高：{{ user.account }}円</p>
+      <div class="logout">
+        <button type="button" class="button is-primary" @click="logoutUser">ログアウト</button>
+      </div>
     </div>
     <Title msg="ユーザー一覧"/>
   </div>
@@ -21,6 +24,12 @@ export default {
     ...mapGetters([
       'user'
     ])
+  },
+  methods: {
+    logoutUser(){
+      this.$store.dispatch('logoutUser')
+      this.$router.push('/signin');
+    }
   }
 }
 </script>
@@ -34,5 +43,9 @@ export default {
 
 .account {
   text-align: right;
+}
+
+.logout {
+  float: right;
 }
 </style>
