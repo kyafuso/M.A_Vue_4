@@ -29,14 +29,10 @@ export default new Vuex.Store({
     },
     setLogin(state){
       state.user.isLogin = true;
-      //const doc = db.collection('users').doc(firebase.auth().currentUser.uid).get()
-      //const user = doc.data()
-      //state.user.name = user.name
-      let userData = {}
       const docRef = db.collection('users').doc(firebase.auth().currentUser.uid)
       docRef.get().then((doc) => {
         if (doc.exists) {
-          userData = doc.data()
+          const userData = doc.data()
           state.user.name = userData.name
           state.user.account = userData.account
         }
