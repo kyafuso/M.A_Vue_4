@@ -12,10 +12,12 @@ export default new Vuex.Store({
       name : '',
       account : '',
       isLogin : false
-    }
+    },
+    users: []
   },
   getters: {
-    user: state => state.user
+    user: state => state.user,
+    users: state => state.users
   },
   mutations: {
     setUser(state, user){
@@ -40,6 +42,23 @@ export default new Vuex.Store({
     },
     setLogout(state){
       state.user.isLogin = false;
+      state.users = [];
+    },
+    getUsers(state){
+      db.collection("users").get().then((query) => {
+        query.forEach((doc) => {
+          var data = doc.data();
+          if (doc.id != firebase.auth().currentUser.uid) {
+            state.users.push({ id: doc.id, 
+                               name: data.name, 
+                               account: data.account
+                            });
+          }
+        });
+      })
+      .catch((error)=>{
+        console.log(`データの取得に失敗しました (${error})`);
+      });
     }
   },
   actions: {
@@ -48,6 +67,7 @@ export default new Vuex.Store({
       .then((userCredential) => {
         console.log(userCredential.user);
         commit('setUser', user);
+        commit('getUsers');
       })
       .catch((error) => {
         console.log(error.code);
@@ -59,6 +79,7 @@ export default new Vuex.Store({
       .then((userCredential) => {
         console.log(userCredential.user);
         commit('setLogin');
+        commit('getUsers');
       })
       .catch((error) => {
         console.log(error.code);
