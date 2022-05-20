@@ -47,10 +47,10 @@ export default new Vuex.Store({
     getUsers(state){
       db.collection("users").get().then((query) => {
         query.forEach((doc) => {
-          var data = doc.data();
+          const data = doc.data();
           if (doc.id != firebase.auth().currentUser.uid) {
-            state.users.push({ id: doc.id, 
-                               name: data.name, 
+            state.users.push({ id: doc.id,
+                               name: data.name,
                                account: data.account
                             });
           }
