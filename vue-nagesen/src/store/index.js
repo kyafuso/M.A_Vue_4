@@ -59,7 +59,18 @@ export default new Vuex.Store({
       .catch((error)=>{
         console.log(`データの取得に失敗しました (${error})`);
       });
-    }
+    },
+    withdrawMoney(state, amount) {
+      const docRef = db.collection('users').doc(firebase.auth().currentUser.uid);
+      docRef.update({ account: state.user.account - Number(amount) });
+      state.user.account = state.user.account - Number(amount)
+    },
+    sendMoney(state, {amount, recipient}) {
+      const docRef = db.collection('users').doc(recipient.id);
+      docRef.update({ account: recipient.account + Number(amount) });
+      const result = state.users.find((user) => user.id === recipient.id)
+      result.account = recipient.account + Number(amount)
+    },
   },
   actions: {
     registerUser( {commit}, user){
@@ -95,6 +106,10 @@ export default new Vuex.Store({
         console.log(error.code);
         console.log(error.message);
       });
+    },
+    transferAmount( {commit}, {amount, recipient}){
+      commit('withdrawMoney', amount);
+      commit('sendMoney', {amount, recipient});
     }
   },
   modules: {
