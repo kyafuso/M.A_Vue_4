@@ -21,12 +21,13 @@
           <tbody v-for="user in users" v-bind:key="user.id">
             <tr>
               <td>{{ user.name }}</td>
-              <td><button type="button" class="button is-primary is-small" @click="openModal(user)">walletを見る</button></td>
-              <td><button type="button" class="button is-primary is-small">送る</button></td>
+              <td><button type="button" class="button is-primary is-small" @click="openWalletModal(user)">walletを見る</button></td>
+              <td><button type="button" class="button is-primary is-small" @click="openTransferModal(user)">送る</button></td>
             </tr>
           </tbody>
         </table>
-        <modal :val="userInfo" v-show="showContent" @close="closeModal" />
+        <wallet-modal :val="userInfo" v-show="showWalletModal" @close="closeWalletModal" />
+        <transfer-modal :val="userInfo" v-show="showTransferModal" @close="closeTransferModal" />
       </div>
     </div>
   </div>
@@ -34,18 +35,21 @@
 
 <script>
 import Title from '@/components/Title.vue'
-import Modal from '@/components/Modal.vue'
+import WalletModal from '@/components/WalletModal.vue'
+import TransferModal from '@/components/TransferModal.vue'
 import { mapGetters } from 'vuex'
 
 export default {
   name: 'Home',
   components: {
     Title,
-    Modal
+    WalletModal,
+    TransferModal
   },
   data () {
       return {
-        showContent: false,
+        showWalletModal: false,
+        showTransferModal: false
       }
   },
   computed: {
@@ -59,13 +63,20 @@ export default {
       this.$store.dispatch('logoutUser')
       this.$router.push('/signin');
     },
-    openModal(user) {
-      this.showContent = true
+    openWalletModal(user) {
+      this.showWalletModal = true
       this.userInfo = user
     },
-    closeModal () {
-      this.showContent = false
-    }
+    openTransferModal(user) {
+      this.showTransferModal = true
+      this.userInfo = user
+    },
+    closeWalletModal () {
+      this.showWalletModal = false
+    },
+    closeTransferModal () {
+      this.showTransferModal = false
+    },
   }
 }
 </script>

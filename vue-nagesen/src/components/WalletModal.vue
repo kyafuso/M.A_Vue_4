@@ -9,14 +9,14 @@
 </template>
 
 <script>
-  export default {
-    name: 'Modal',
-    props: ['val']
-  }
+export default {
+  name: 'WalletModal',
+  props: ['val']
+}
 </script>
 
 <style>
-  #overlay{
+#overlay{
   z-index:1;
   position:fixed;
   top:0;
@@ -37,5 +37,4 @@
   background-color: #fff;
   text-align: center;
 }
-
 </style>
